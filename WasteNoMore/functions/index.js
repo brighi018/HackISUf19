@@ -29,8 +29,6 @@ const app = dialogflow({debug: true});
 
 var refrigerator = [];
 
-// Handle the Dialogflow intent named 'favorite color'.
-// The intent collects a parameter named 'color'.
 app.intent('addFood', (conv, {food}) => {
   refrigerator.push(food);
   conv.ask('You have this in your fridge: ' + refrigerator);
@@ -41,6 +39,14 @@ app.intent('removeFood', (conv, {food}) =>{
     refrigerator.splice(refrigerator.indexOf(food), 1);
   }
   conv.ask('you have this in your fridge: ' + refrigerator);
+});
+
+app.intent('inMyFridge', (conv, {food}) =>{
+  if(refrigerator.indexOf(food) > -1){
+      conv.ask('Yes, you do have ' + food + ' in your fridge.');
+  }else{
+    conv.ask('No, you do not have ' + food + ' in your fridge');
+  }
 })
 
 // Handle the Dialogflow intent named 'Default Welcome Intent'.
