@@ -31,21 +31,15 @@ var refrigerator = [];
 
 app.intent('addFood', (conv, {food, date, quantity}) => {
   var newFood = {name:food, expiration:date, qty:quantity};
-  // console.log(expdate);
-  // console.log();
   refrigerator.push(newFood);
-  // conv.ask(newFood.name);
-   //conv.ask(newFood.expiration);
-   //conv.ask(newFood.qty);
-//  console.log('bailey sucks\n');
-var line = [];
-for(var i in refrigerator){
-  line.push(refrigerator[i].name);
-}
-
-conv.ask('You have this in your fridge: ' + line);
-
-
+  var line = "";
+  for(var i = 0; i < refrigerator.length; i++){
+    line += " " + refrigerator[i].name;
+    if (i < refrigerator.length - 1) {
+      line += ",";
+    }
+  }
+  conv.ask('You have this in your fridge:' + line);
 });
 
 app.intent('removeFood', (conv, {food}) =>{
@@ -59,17 +53,20 @@ app.intent('removeFood', (conv, {food}) =>{
   if(index > -1){
     refrigerator.splice(index, 1);
   }
-  var line = [];
-  for(var i in refrigerator){
-    line.push(refrigerator[i].name);
+  var line = "";
+  for(var i = 0; i < refrigerator.length; i++){
+    line += " " + refrigerator[i].name;
+    if (i < refrigerator.length - 1) {
+      line += ",";
+    }
   }
 
-  conv.ask('You have this in your fridge: ' + line);;
+  conv.ask('You have this in your fridge:' + line);;
 });
 
 
 app.intent('inMyFridge', (conv, {food}) =>{
-  var index =-1;
+  var index = -1;
   for(var i = 0; i < refrigerator.length; i++){
     if(refrigerator[i].name == (food)){
       index = i;
@@ -84,14 +81,17 @@ app.intent('inMyFridge', (conv, {food}) =>{
 });
 
 app.intent('listExpiring', (conv) => {
-  var list = [];
+  var list = "";
   for (var i = 0; i < refrigerator.length; i++) {
     var now = new Date().getTime();
-    if ((new Date(refrigerator[i].expiration)).getTime() <= (now + 7*1000*60*60*24)) {
-      list.push(refrigerator[i].name);
+    if ((new Date(refrigerator[i].expiration)).getTime() <= (now + 7*1000*60*60*24)) { //7 days from now
+      list += " " + refrigerator[i].name;
+      if (i < refrigerator.length - 1) {
+        list += ",";
+      }
     }
   }
-  conv.ask('Here are items expiring soon: ' + list);
+  conv.ask('Here are items expiring soon:' + list);
 });
 
 // Handle the Dialogflow intent named 'Default Welcome Intent'.

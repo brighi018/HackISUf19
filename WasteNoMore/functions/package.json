@@ -1,7 +1,7 @@
 {
-  "name": "codelab-level-one",
-  "description": "Actions on Google Codelab Level 1",
-  "author": "Google Inc",
+  "name": "hack-isu-f19",
+  "description": "SquirrelHacks Fall 2019",
+  "author": "Alexis Cordts and Bailey Righi",
   "private": true,
   "engines": {
     "node": "8"
