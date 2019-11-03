@@ -85,9 +85,10 @@ app.intent('inMyFridge', (conv, {food}) =>{
 
 app.intent('listExpiring', (conv) => {
   var list = [];
-  for (var item in refrigerator) {
-    if (item['expdate'] <= new Date() + 7) {
-      list.push(item);
+  for (var i = 0; i < refrigerator.length; i++) {
+    var now = new Date().getTime();
+    if ((new Date(refrigerator[i].expiration)).getTime() <= (now + 7*1000*60*60*24)) {
+      list.push(refrigerator[i].name);
     }
   }
   conv.ask('Here are items expiring soon: ' + list);
