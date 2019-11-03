@@ -83,6 +83,16 @@ app.intent('inMyFridge', (conv, {food}) =>{
   }
 });
 
+app.intent('listExpiring', (conv) => {
+  var list = [];
+  for (var item in refrigerator) {
+    if (item['expdate'] <= new Date() + 7) {
+      list.push(item);
+    }
+  }
+  conv.ask('Here are items expiring soon: ' + list);
+});
+
 // Handle the Dialogflow intent named 'Default Welcome Intent'.
 app.intent('Default Welcome Intent', (conv) => {
     conv.ask(new Suggestion('Add Eggs', 'Remove Eggs', 'List close to expired food', 'Do I have eggs?'));
