@@ -29,8 +29,10 @@ const app = dialogflow({debug: true});
 
 var refrigerator = [];
 
-app.intent('addFood', (conv, {food}) => {
-  refrigerator.push(food);
+app.intent('addFood', (conv, {food, expdate}) => {
+  var newFood = {name:food, date:expdate}
+  refrigerator.push(newFood);
+  conv.ask(newFood.name);
   conv.ask('You have this in your fridge: ' + refrigerator);
 });
 
