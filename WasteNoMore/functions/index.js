@@ -49,11 +49,21 @@ app.intent('inMyFridge', (conv, {food}) =>{
   }else{
     conv.ask('No, you do not have ' + food + ' in your fridge');
   }
-})
+});
+
+app.intent('listExpiring', (conv) => {
+  var list = [];
+  for (var item in refrigerator) {
+    if (item['expdate'] <= new Date() + 7) {
+      list.push(item);
+    }
+  }
+  conv.ask('Here are items expiring soon: ' + list);
+});
 
 // Handle the Dialogflow intent named 'Default Welcome Intent'.
 app.intent('Default Welcome Intent', (conv) => {
-    conv.ask(new Suggestion('Add Food', 'Remove Food', 'List Close to Expired food', 'Ask if you have food'));
+    // conv.ask(new Suggestion('Add Food', 'Remove Food', 'List Close to Expired food', 'Ask if you have food'));
 });
 
 // Set the DialogflowApp object to handle the HTTPS POST request.
