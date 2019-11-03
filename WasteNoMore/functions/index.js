@@ -29,27 +29,59 @@ const app = dialogflow({debug: true});
 
 var refrigerator = [];
 
-app.intent('addFood', (conv, {food, expdate}) => {
-  var newFood = {name:food, date:expdate}
+app.intent('addFood', (conv, {food, date, quantity}) => {
+  var newFood = {name:food, expiration:date, qty:quantity};
+  // console.log(expdate);
+  // console.log();
   refrigerator.push(newFood);
-  conv.ask(newFood.name);
-  conv.ask('You have this in your fridge: ' + refrigerator);
+  // conv.ask(newFood.name);
+   //conv.ask(newFood.expiration);
+   //conv.ask(newFood.qty);
+//  console.log('bailey sucks\n');
+var line = [];
+for(var i in refrigerator){
+  line.push(refrigerator[i].name);
+}
+
+conv.ask('You have this in your fridge: ' + line);
+
+
 });
 
 app.intent('removeFood', (conv, {food}) =>{
-  if(refrigerator.indexOf(food) > -1){
-    refrigerator.splice(refrigerator.indexOf(food), 1);
+  var index =-1;
+  for(var i = 0; i < refrigerator.length; i++){
+    if(refrigerator[i].name == (food)){
+      index = i;
+      break;
+    }
   }
-  conv.ask('you have this in your fridge: ' + refrigerator);
+  if(index > -1){
+    refrigerator.splice(index, 1);
+  }
+  var line = [];
+  for(var i in refrigerator){
+    line.push(refrigerator[i].name);
+  }
+
+  conv.ask('You have this in your fridge: ' + line);;
 });
 
+
 app.intent('inMyFridge', (conv, {food}) =>{
-  if(refrigerator.indexOf(food) > -1){
+  var index =-1;
+  for(var i = 0; i < refrigerator.length; i++){
+    if(refrigerator[i].name == (food)){
+      index = i;
+      break;
+    }
+  }
+  if(index > -1){
       conv.ask('Yes, you do have ' + food + ' in your fridge.');
   }else{
     conv.ask('No, you do not have ' + food + ' in your fridge');
   }
-})
+});
 
 // Handle the Dialogflow intent named 'Default Welcome Intent'.
 app.intent('Default Welcome Intent', (conv) => {
