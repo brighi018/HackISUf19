@@ -85,7 +85,7 @@ app.intent('inMyFridge', (conv, {food}) =>{
 
 // Handle the Dialogflow intent named 'Default Welcome Intent'.
 app.intent('Default Welcome Intent', (conv) => {
-    conv.ask(new Suggestion('Add Food', 'Remove Food', 'List Close to Expired food', 'Ask if you have food'));
+    conv.ask(new Suggestion('Add Eggs', 'Remove Eggs', 'List close to expired food', 'Do I have eggs?'));
 });
 
 // Set the DialogflowApp object to handle the HTTPS POST request.
